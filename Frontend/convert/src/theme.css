@@ -1,0 +1,356 @@
+/* ========================================
+    DARK THEME OVERRIDES ONLY (REFINED & COMPLETE)
+    
+    This consolidated version addresses common residual white issues 
+    and improves organization over the original code.
+    ======================================== */
+
+/* --- THEME TOGGLE BUTTON STYLING (Light/Dark Agnostic Base) --- */
+.theme-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    margin-bottom: 1.5rem;
+}
+
+.theme-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.theme-btn:active {
+    transform: translateY(0);
+}
+
+/* ========================================
+    DARK THEME STYLES (CRITICAL FOUNDATION) 🛠️
+    ======================================== */
+
+/* --- ROOT DARK THEME STYLES (Global Reset) --- */
+.dark-theme,
+.dark-theme body,
+html.dark-theme {
+    /* Set the deepest background color and default text color */
+    background-color: #0a0e27 !important; /* Deepest blue/black */
+    color: #f1f5f9; /* Default text color */
+    min-height: 100vh;
+    /* Firefox Scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: #6366f1 #0a0e27;
+}
+
+/* Base content area and text inheritance */
+.dark-theme .content {
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%) !important;
+}
+
+/* Force everything in content to inherit colors and use dark borders */
+.dark-theme .content,
+.dark-theme .content *:not(a):not(button):not(input) {
+    color: inherit;
+    border-color: #4b5563;
+}
+
+/* --- CONTAINER BACKGROUNDS (Secondary Dark Color) --- */
+.dark-theme .table-wrapper,
+.dark-theme .steps-table-wrapper,
+.dark-theme .steps-table-container,
+.dark-theme .content table,
+.dark-theme .json-table,
+.dark-theme .application-table,
+.dark-theme .steps-table {
+    background-color: #2d3748 !important; /* Secondary container background */
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.3);
+    border-radius: 12px;
+}
+
+.dark-theme .nested-table-wrapper {
+    background: #1e2838 !important;
+    border-left: 4px solid #8b5cf6;
+    box-shadow: inset 0 0 20px rgba(139, 92, 246, 0.25);
+}
+
+.dark-theme .content .file-upload-wrapper {
+    background-color: #2d3748 !important;
+    border: 1px solid #4b5563;
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+}
+
+/* --- TEXT, HEADINGS, AND LINKS --- */
+.dark-theme .content h2 {
+    color: #c4b5fd;
+    text-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+    font-weight: 800;
+}
+
+.dark-theme .steps-table-wrapper h3,
+.dark-theme .dialog-header h3 {
+    color: #c4b5fd;
+    text-shadow: 0 0 15px rgba(196, 181, 253, 0.6);
+}
+
+.dark-theme .placeholder {
+    color: #ffffff;
+    opacity: 0.7;
+    background: linear-gradient(135deg, #1e2433 0%, #2d3748 100%);
+    border: 2px dashed #6366f1;
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+    padding: 3rem;
+    border-radius: 16px;
+}
+
+.dark-theme a {
+    color: #a78bfa;
+    font-weight: 700;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.dark-theme a:hover {
+    color: #c4b5fd;
+    text-shadow: 0 0 10px rgba(167, 139, 250, 0.6);
+}
+
+/* --- BUTTON OVERRIDES --- */
+.dark-theme .theme-btn {
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.6), 0 0 15px rgba(99, 102, 241, 0.4);
+}
+
+.dark-theme .theme-btn:hover {
+    box-shadow: 0 6px 25px rgba(99, 102, 241, 0.7), 0 0 20px rgba(139, 92, 246, 0.5);
+}
+
+.dark-theme .steps-actions button:hover {
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.5);
+}
+
+/* Fix the button action bar (Critical for steps table footer) */
+.dark-theme .steps-actions {
+    background-color: #2d3748 !important;
+    padding: 1rem;
+    border-radius: 0 0 12px 12px;
+    margin-top: 0;
+}
+
+/* --- TABLE STYLING (Headers, Rows, Cells) --- */
+
+/* Headers */
+.dark-theme thead {
+    background: linear-gradient(135deg, #4b5563, #6366f1) !important;
+}
+
+.dark-theme th {
+    color: #c4b5fd !important;
+    text-shadow: 0 0 10px rgba(196, 181, 253, 0.5);
+    font-weight: 800;
+    border-bottom: 2px solid #6366f1;
+    background-color: transparent !important;
+}
+
+/* Rows */
+.dark-theme tbody tr {
+    background-color: #2d3748 !important;
+    transition: all 0.2s ease;
+}
+
+.dark-theme tbody tr:nth-child(even) {
+    background-color: #374151 !important;
+}
+
+.dark-theme tbody tr:hover {
+    background-color: #3d4a5c !important;
+    box-shadow: inset 0 0 20px rgba(99, 102, 241, 0.2);
+    transform: scale(1.002);
+}
+
+/* Cells */
+.dark-theme td {
+    color: #f1f5f9 !important;
+    font-weight: 600;
+    border-bottom: 1px solid #374151;
+    background-color: transparent !important; /* Critical for row striping/hover */
+}
+
+/* New Row Highlight */
+.dark-theme .new-step-row {
+    animation: highlight-dark 1s ease;
+}
+
+@keyframes highlight-dark {
+    0%, 100% { background: transparent; }
+    50% { background: rgba(139, 92, 246, 0.3); }
+}
+
+/* --- INPUTS AND EDITABLE CELLS --- */
+.dark-theme input[type="text"],
+.dark-theme .application-input,
+.dark-theme .step-input,
+.dark-theme .editable-cell input,
+.dark-theme .editable-cell textarea {
+    background-color: #2d3748 !important;
+    color: #f1f5f9 !important;
+    border: 1px solid #4b5563 !important;
+    font-weight: 600;
+}
+
+.dark-theme input[type="text"]:focus,
+.dark-theme .application-input:focus,
+.dark-theme .step-input:focus,
+.dark-theme .editable-cell input:focus,
+.dark-theme .editable-cell textarea:focus {
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3), 0 0 15px rgba(139, 92, 246, 0.4);
+    background-color: #374151 !important;
+}
+
+.dark-theme .editable-cell:hover:not(.is-editing) {
+    background-color: #252d3d;
+}
+
+/* --- MODAL/DIALOGS STYLING --- */
+
+/* Modal Overlay */
+.dark-theme .modal-overlay {
+    background: rgba(0, 0, 0, 0.85) !important;
+    backdrop-filter: blur(8px);
+}
+
+/* Settings Dialog (Base) */
+.dark-theme .settings-dialog {
+    background-color: #1a1f2e !important;
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.5), 0 10px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid #4b5563;
+}
+
+.dark-theme .dialog-header {
+    background-color: #2d3748 !important;
+    border-bottom: 1px solid #4b5563;
+}
+
+/* Critical Fixes for Dialog Children (fixes residual white strips) */
+.dark-theme .settings-dialog > *,
+.dark-theme .dialog-content,
+.dark-theme .dialog-actions {
+    background-color: #1a1f2e !important; /* Force dialog background */
+    border-top: none !important;
+    padding: 1rem;
+    margin: 0;
+}
+
+/* Re-apply action bar specifics */
+.dark-theme .dialog-actions {
+    background-color: #2d3748 !important;
+    border-top: 1px solid #4b5563 !important;
+}
+
+/* Dialog Buttons */
+.dark-theme .close-btn { color: #f1f5f9; }
+.dark-theme .cancel-btn {
+    color: #f1f5f9;
+    border: 1px solid #4b5563;
+    transition: background-color 0.2s ease;
+}
+.dark-theme .cancel-btn:hover { background-color: #252d3d; }
+.dark-theme .save-btn:hover {
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.6), 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+/* --- SCROLLBARS (Webkit - Chrome, Safari, Edge) --- */
+.dark-theme ::-webkit-scrollbar-track {
+    background: #1a1f2e !important;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb {
+    background: #4b5563 !important;
+    border-radius: 6px;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb:hover {
+    background: #8b5cf6 !important;
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+}
+
+/* Override scrollbar for main areas */
+.dark-theme .content::-webkit-scrollbar-track,
+.dark-theme .dialog-content::-webkit-scrollbar-track,
+.dark-theme .table-wrapper::-webkit-scrollbar-track {
+    background: #0a0e27 !important;
+}
+
+.dark-theme .content::-webkit-scrollbar-thumb,
+.dark-theme .dialog-content::-webkit-scrollbar-thumb,
+.dark-theme .table-wrapper::-webkit-scrollbar-thumb {
+    background: #6366f1 !important;
+}
+
+/* --- MISC UI FIXES --- */
+.dark-theme .resize-handle:hover {
+    background: #8b5cf6;
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.6);
+}
+
+.dark-theme .content .file-name {
+    color: #f1f5f9;
+}
+
+/* Ensure proper text color inheritance inside specific wrappers */
+.dark-theme .json-table * {
+    color: inherit;
+}
+
+/* Application table specific fixes */
+.dark-theme .application-table tbody,
+.dark-theme .application-table thead {
+    background-color: transparent !important;
+}
+
+.dark-theme .application-table td[style] {
+    /* If a cell has an inline background style, override it to the stripe color */
+    background-color: #374151 !important;
+}
+
+/* ========================================
+    CRITICAL: FINAL WHITE BACKGROUND CRUSHERS 💀
+    Place these at the END of your CSS file.
+    ======================================== */
+
+/* Aggressively target and overwrite any inline/default white backgrounds
+   to the common dark element background */
+.dark-theme [style*="background: #fff"],
+.dark-theme [style*="background: white"],
+.dark-theme [style*="background-color: #fff"],
+.dark-theme [style*="background-color: white"],
+.dark-theme [style*="background-color: rgb(255"],
+.dark-theme [style*="background: rgb(255"] {
+    background-color: #2d3748 !important;
+}
+
+/* Override any div/section with light background in content to dark */
+.dark-theme .content div[style*="background"],
+.dark-theme .content section[style*="background"] {
+    background-color: #2d3748 !important;
+}
+
+/* Ensure elements in dialogs use the dialog's darker background */
+.dark-theme .settings-dialog [style*="background: #fff"],
+.dark-theme .settings-dialog [style*="background-color: #fff"] {
+    background-color: #1a1f2e !important;
+}
+
+/* Ensure containers let their parent's dark color show through */
+.dark-theme .content > *,
+.dark-theme .settings-dialog > *,
+.dark-theme .modal-overlay * {
+    background-color: inherit;
+}

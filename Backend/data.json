@@ -1,0 +1,1208 @@
+{
+  "message": "JSON Downloaded",
+  "data": {
+    "pageConfig": [
+      {
+        "uuid": "3c7a5280-10b1-11ef-bbf0-3ff12114057e",
+        "pageElements": [
+          {
+            "pageId": 32,
+            "elementName": "Register",
+            "elementType": "Link",
+            "locatorType": "XPATH",
+            "locatorValue": "//a[text()='Register']",
+            "isPageIdentifier": "Yes",
+            "status": "Active",
+            "eventName": "Click",
+            "uuid": "c6ff6ea0-b637-11ef-a814-99d325c2d157"
+          },
+          {
+            "pageId": 32,
+            "elementName": "Message",
+            "elementType": "Text",
+            "locatorType": "XPATH",
+            "locatorValue": "//*[@ng-bind=\"flash.message\"]",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "",
+            "uuid": "f2194c30-b639-11ef-a814-99d325c2d157"
+          },
+          {
+            "pageId": 32,
+            "elementName": "Username",
+            "elementType": "Text",
+            "locatorType": "Selector",
+            "locatorValue": "#username",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "Click",
+            "uuid": "c7149d20-b65f-11ef-a3ba-594d8b512f20"
+          },
+          {
+            "pageId": 32,
+            "elementName": "Password",
+            "elementType": "Text",
+            "locatorType": "Selector",
+            "locatorValue": "#password",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "Click",
+            "uuid": "dda2b130-b65f-11ef-a3ba-594d8b512f20"
+          },
+          {
+            "pageId": 32,
+            "elementName": "Username error message",
+            "elementType": "Text",
+            "locatorType": "XPATH",
+            "locatorValue": "//*[text()='Username']/following-sibling::span",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "",
+            "uuid": "f32a0e30-b660-11ef-a3ba-594d8b512f20"
+          },
+          {
+            "pageId": 32,
+            "elementName": "Password error message",
+            "elementType": "Text",
+            "locatorType": "XPATH",
+            "locatorValue": "//*[text()='Password']/following-sibling::span",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "",
+            "uuid": "98cb7bd0-b661-11ef-a3ba-594d8b512f20"
+          },
+          {
+            "pageId": 32,
+            "elementName": "Login Header",
+            "elementType": "Text",
+            "locatorType": "Selector",
+            "locatorValue": "//h2[text()='Login']",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "",
+            "uuid": "4ba221c0-b66a-11ef-a3ba-594d8b512f20"
+          },
+          {
+            "pageId": 32,
+            "elementName": "Login",
+            "elementType": "Button",
+            "locatorType": "XPATH",
+            "locatorValue": "//button[text()='Login']",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "Click",
+            "uuid": "cb976520-b66a-11ef-a3ba-594d8b512f20"
+          },
+          {
+            "pageId": 32,
+            "elementName": "Error Message",
+            "elementType": "Text",
+            "locatorType": "XPATH",
+            "locatorValue": "//*[text()='Username or password is incorrect']",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": null,
+            "uuid": "344e884c-ac83-40da-9705-11f37eb1af83"
+          }
+        ],
+        "status": "Active",
+        "pageId": 32,
+        "pageName": "Login",
+        "navigation": {
+          "navigationType": "URL",
+          "navigationValue": "https://globalsqa.com//angularJs-protractor/registration-login-example/#/login"
+        }
+      },
+      {
+        "uuid": "8de03de0-b635-11ef-a814-99d325c2d157",
+        "pageElements": [
+          {
+            "pageId": 437,
+            "elementName": "Home header",
+            "elementType": "Text",
+            "locatorType": "Selector",
+            "locatorValue": "//*[@class=\"ng-binding ng-scope\"]",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "",
+            "uuid": "2663e9a0-b66c-11ef-a3ba-594d8b512f20"
+          },
+          {
+            "pageId": 437,
+            "elementName": "Logged In Message",
+            "elementType": "Text",
+            "locatorType": "Selector",
+            "locatorValue": "body > div.jumbotron > div > div > div > p:nth-child(2)",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "",
+            "uuid": "bfbc55e0-b673-11ef-a3ba-594d8b512f20"
+          },
+          {
+            "pageId": 437,
+            "elementName": "Register User Note",
+            "elementType": "Text",
+            "locatorType": "XPATH",
+            "locatorValue": "//h3[text()='All registered users:']",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "",
+            "uuid": "1907ae10-b674-11ef-a3ba-594d8b512f20"
+          },
+          {
+            "pageId": 437,
+            "elementName": "Register User",
+            "elementType": "Text",
+            "locatorType": "XPATH",
+            "locatorValue": "//ul",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "",
+            "uuid": "27967c90-b674-11ef-a3ba-594d8b512f20"
+          },
+          {
+            "pageId": 437,
+            "elementName": "Logout",
+            "elementType": "Button",
+            "locatorType": "XPATH",
+            "locatorValue": "//a[text()='Logout']",
+            "isPageIdentifier": "Yes",
+            "status": "Active",
+            "eventName": "Click",
+            "uuid": "3851a0f0-b674-11ef-a3ba-594d8b512f20"
+          },
+          {
+            "pageId": 437,
+            "elementName": "Delete",
+            "elementType": "Link",
+            "locatorType": "XPATH",
+            "locatorValue": "(//*[text()='Delete'])[1]",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "Click",
+            "uuid": "42fa0d80-b674-11ef-a3ba-594d8b512f20"
+          }
+        ],
+        "status": "Active",
+        "pageId": 437,
+        "pageName": "Home",
+        "navigation": {
+          "navigationType": "URL",
+          "navigationValue": ""
+        }
+      },
+      {
+        "uuid": "974973b0-b635-11ef-a814-99d325c2d157",
+        "pageElements": [
+          {
+            "pageId": 438,
+            "elementName": "First name",
+            "elementType": "Text",
+            "locatorType": "Selector",
+            "locatorValue": "#firstName",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "Click",
+            "uuid": "a96cdaa0-b635-11ef-a814-99d325c2d157"
+          },
+          {
+            "pageId": 438,
+            "elementName": "Last name",
+            "elementType": "Text",
+            "locatorType": "Selector",
+            "locatorValue": "#Text1",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "Click",
+            "uuid": "b46f9c30-b635-11ef-a814-99d325c2d157"
+          },
+          {
+            "pageId": 438,
+            "elementName": "Username",
+            "elementType": "Text",
+            "locatorType": "Selector",
+            "locatorValue": "#username",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "Click",
+            "uuid": "e7ee22c0-b635-11ef-a814-99d325c2d157"
+          },
+          {
+            "pageId": 438,
+            "elementName": "Password",
+            "elementType": "Text",
+            "locatorType": "Selector",
+            "locatorValue": "#password",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "Click",
+            "uuid": "fd77bf20-b635-11ef-a814-99d325c2d157"
+          },
+          {
+            "pageId": 438,
+            "elementName": "Username error message",
+            "elementType": "Text",
+            "locatorType": "XPATH",
+            "locatorValue": "//*[text()='Username']/following-sibling::span",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "",
+            "uuid": "169557b0-b636-11ef-a814-99d325c2d157"
+          },
+          {
+            "pageId": 438,
+            "elementName": "Password error message",
+            "elementType": "Text",
+            "locatorType": "XPATH",
+            "locatorValue": "//*[text()='Password']/following-sibling::span",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "",
+            "uuid": "84e62820-b636-11ef-a814-99d325c2d157"
+          },
+          {
+            "pageId": 438,
+            "elementName": "First name error message",
+            "elementType": "Text",
+            "locatorType": "XPATH",
+            "locatorValue": "//*[text()='First name']/following-sibling::span",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "",
+            "uuid": "a8611a80-b636-11ef-a814-99d325c2d157"
+          },
+          {
+            "pageId": 438,
+            "elementName": "Last name error message",
+            "elementType": "Text",
+            "locatorType": "XPATH",
+            "locatorValue": "//*[text()='Last name']/following-sibling::span",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "",
+            "uuid": "ce0e5630-b636-11ef-a814-99d325c2d157"
+          },
+          {
+            "pageId": 438,
+            "elementName": "Register",
+            "elementType": "Button",
+            "locatorType": "XPATH",
+            "locatorValue": "//button[text()='Register']",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "Click",
+            "uuid": "f31da430-b636-11ef-a814-99d325c2d157"
+          },
+          {
+            "pageId": 438,
+            "elementName": "Cancel",
+            "elementType": "Link",
+            "locatorType": "XPATH",
+            "locatorValue": "//a[text()='Cancel']",
+            "isPageIdentifier": "Yes",
+            "status": "Active",
+            "eventName": "Click",
+            "uuid": "1f9ec4d0-b637-11ef-a814-99d325c2d157"
+          },
+          {
+            "pageId": 438,
+            "elementName": "Register Header",
+            "elementType": "Text",
+            "locatorType": "XPATH",
+            "locatorValue": "//h2[text()='Register']",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "",
+            "uuid": "45735ea0-b637-11ef-a814-99d325c2d157"
+          },
+          {
+            "pageId": 438,
+            "elementName": "hover message",
+            "elementType": "Text",
+            "locatorType": "Selector",
+            "locatorValue": "document.querySelector('input[name=\"firstName\"]').reportValidity().validationMessage;",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": null,
+            "uuid": "58021ad5-0cee-4a9b-80c3-1d4f60a832b4"
+          },
+          {
+            "pageId": 438,
+            "elementName": "first name text box",
+            "elementType": "Text",
+            "locatorType": "XPATH",
+            "locatorValue": "//input[@name=\"firstName\"]",
+            "isPageIdentifier": "No",
+            "status": "Active",
+            "eventName": "Hover",
+            "uuid": "edce7bc2-4d07-4af0-bf6e-d033b3bc3a24"
+          }
+        ],
+        "status": "Active",
+        "pageId": 438,
+        "pageName": "Register",
+        "navigation": {
+          "navigationType": "URL",
+          "navigationValue": ""
+        }
+      }
+    ],
+    "testsetConfig": {
+      "testsets": [
+        {
+          "id": 854,
+          "name": "End To End Globalsqa",
+          "status": "Active",
+          "uuid": "42c49520-b862-11ef-9d72-e34682d3e18b",
+          "appId": 102,
+          "seqId": 1,
+          "testCases": [
+            {
+              "testSetId": 854,
+              "id": 1999,
+              "seqId": 1,
+              "name": "Global sqa workflow validation with Negative Testing",
+              "status": "Active",
+              "uuid": "1e956b61-1306-40f1-ba06-e4c816c3b003",
+              "steps": [
+                {
+                  "testCaseId": 1999,
+                  "seqId": 1,
+                  "type": "Given",
+                  "text": "Given User is on 'Login' Page",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "9b07d700-3538-4735-9669-075d9b8b5519",
+                  "tesCaseFunctionSteps": [],
+                  "id": 1
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 2,
+                  "type": "When",
+                  "text": "When User 'Click' on 'Register' 'Link' and navigate to 'Register' Page",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "a8b1d685-253e-41b7-a6a9-72e10f26668d",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 3,
+                  "type": "When",
+                  "text": "When User enters 'First name' as 'F'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "d43f6b4d-b556-403c-b5ce-dfea740c5562",
+                  "tesCaseFunctionSteps": [],
+                  "id": 3
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 4,
+                  "type": "When",
+                  "text": "When User hits 'Backspace' Key",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "6a8a06a7-ca66-4b91-92a8-03688661080e",
+                  "tesCaseFunctionSteps": [],
+                  "id": 4
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 5,
+                  "type": "Then",
+                  "text": "Then System should show 'First name error message' as 'First name is required'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "b897149b-50d9-4b4d-8deb-3712779bb4d9",
+                  "tesCaseFunctionSteps": [],
+                  "id": 5
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 6,
+                  "type": "When",
+                  "text": "When User enters 'Last name' as 'L'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "84829183-4da0-4c66-a0eb-473ea202fa28",
+                  "tesCaseFunctionSteps": [],
+                  "id": 6
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 7,
+                  "type": "When",
+                  "text": "When User hits 'Backspace' Key",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "079855b9-8ab3-4990-a787-4685351da648",
+                  "tesCaseFunctionSteps": [],
+                  "id": 7
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 8,
+                  "type": "Then",
+                  "text": "Then System should show 'Last name error message' as 'Last name is required'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "98afe656-c542-4fdb-acb7-9dbc27ff7e78",
+                  "tesCaseFunctionSteps": [],
+                  "id": 8
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 9,
+                  "type": "When",
+                  "text": "When User enters 'Username' as 'U'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "dbbfe7e4-9dc0-463f-88a3-387394561253",
+                  "tesCaseFunctionSteps": [],
+                  "id": 9
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 10,
+                  "type": "When",
+                  "text": "When User hits 'Backspace' Key",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "f13c1f88-a435-4cac-8d9e-51d3a56f75c2",
+                  "tesCaseFunctionSteps": [],
+                  "id": 10
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 11,
+                  "type": "Then",
+                  "text": "Then System should show 'Username error message' as 'Username is required'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "9aa73e62-4d2d-4215-93fd-b4448a03409c",
+                  "tesCaseFunctionSteps": [],
+                  "id": 11
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 12,
+                  "type": "When",
+                  "text": "When User enters 'Password' as 'P'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "e388bb89-ee6f-4009-8c11-257a6522501a",
+                  "tesCaseFunctionSteps": [],
+                  "id": 12
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 13,
+                  "type": "When",
+                  "text": "When User hits 'Backspace' Key",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "c5434038-cdb4-4345-888b-89ff086d2314",
+                  "tesCaseFunctionSteps": [],
+                  "id": 13
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 14,
+                  "type": "Then",
+                  "text": "Then System should show 'Password error message' as 'Password is required'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "6c594b40-fc62-42a7-a9ee-4b37e22d07bf",
+                  "tesCaseFunctionSteps": [],
+                  "id": 14
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "15-1",
+                  "type": "When",
+                  "text": "When User enters 'First name' as '@FTV:First_Name::@UNQ:First Name'",
+                  "testStepGroupName": "Call 'Registration Successful' Function",
+                  "status": "Active",
+                  "uuid": "ae56889d-3bba-46d3-af86-18196a585b78",
+                  "tesCaseFunctionSteps": [],
+                  "id": "15-1"
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "15-2",
+                  "type": "When",
+                  "text": "When User enters 'Last name' as '@FTV:Last_Name::@UNQ:Last name'",
+                  "testStepGroupName": "Call 'Registration Successful' Function",
+                  "status": "Active",
+                  "uuid": "e2ebaf53-ba90-4e0b-bd5a-8ffc763748fb",
+                  "tesCaseFunctionSteps": [],
+                  "id": "15-2"
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "15-3",
+                  "type": "When",
+                  "text": "When User enters 'Username' as '@FTV:User_Name::@UNQ:Username'",
+                  "testStepGroupName": "Call 'Registration Successful' Function",
+                  "status": "Active",
+                  "uuid": "e44b5b47-1fec-4eec-868c-e681413390f0",
+                  "tesCaseFunctionSteps": [],
+                  "id": "15-3"
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "15-4",
+                  "type": "When",
+                  "text": "When User enters 'Password' as 'John@123'",
+                  "testStepGroupName": "Call 'Registration Successful' Function",
+                  "status": "Active",
+                  "uuid": "33bb2d5b-4f45-4181-a89b-02beeadb34bd",
+                  "tesCaseFunctionSteps": [],
+                  "id": "15-4"
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "15-5",
+                  "type": "When",
+                  "text": "When User 'Click' on 'Register' 'Button' and navigate to 'Login' Page",
+                  "testStepGroupName": "Call 'Registration Successful' Function",
+                  "status": "Active",
+                  "uuid": "c3f2171b-1775-4aa1-9ee9-7182f676eddc",
+                  "tesCaseFunctionSteps": [],
+                  "id": "15-5"
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 16,
+                  "type": "When",
+                  "text": "When User enters 'Username' as 'U'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "82a967f2-b269-4779-b808-22a105376b79",
+                  "tesCaseFunctionSteps": [],
+                  "id": 16
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 17,
+                  "type": "When",
+                  "text": "When User hits 'Backspace' Key",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "cda0d530-23a6-4953-a9ec-984eec43a984",
+                  "tesCaseFunctionSteps": [],
+                  "id": 17
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 18,
+                  "type": "Then",
+                  "text": "Then System should show 'Username error message' as 'Username is required'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "ba8ba3c4-3444-4980-acd8-6e854ac48820",
+                  "tesCaseFunctionSteps": [],
+                  "id": 18
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 19,
+                  "type": "When",
+                  "text": "When User enters 'Password' as 'p'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "44e9f722-1cae-4a56-b798-3d37f64f3c08",
+                  "tesCaseFunctionSteps": [],
+                  "id": 19
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 20,
+                  "type": "When",
+                  "text": "When User hits 'Backspace' Key",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "0794cb13-0f13-46bb-af5b-f49f88a29888",
+                  "tesCaseFunctionSteps": [],
+                  "id": 20
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 21,
+                  "type": "Then",
+                  "text": "Then System should show 'Password error message' as 'Password is required'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "7ae94e7a-7ca8-41aa-a0a9-cfc8fe8e675b",
+                  "tesCaseFunctionSteps": [],
+                  "id": 21
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "22-1",
+                  "type": "When",
+                  "text": "When User enters 'Username' as '@FTV:User_Name'",
+                  "testStepGroupName": "Call 'Login Successful' Function",
+                  "status": "Active",
+                  "uuid": "799f1e2b-cc92-490f-a6f7-aa882d0d35c0",
+                  "tesCaseFunctionSteps": [],
+                  "id": "22-1"
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "22-2",
+                  "type": "When",
+                  "text": "When User enters 'Password' as 'John@123'",
+                  "testStepGroupName": "Call 'Login Successful' Function",
+                  "status": "Active",
+                  "uuid": "3d8c5f93-7991-4722-a0b0-fed00ddfdaf5",
+                  "tesCaseFunctionSteps": [],
+                  "id": "22-2"
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "22-3",
+                  "type": "When",
+                  "text": "When User 'Click' on 'Login' 'Button' and navigate to 'Home' Page",
+                  "testStepGroupName": "Call 'Login Successful' Function",
+                  "status": "Active",
+                  "uuid": "a6cabcb2-be40-42d5-aff2-0a756e43c4c5",
+                  "tesCaseFunctionSteps": [],
+                  "id": "22-3"
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "23-1",
+                  "type": "When",
+                  "text": "When User 'Click' on 'Delete' 'Link'",
+                  "testStepGroupName": "Call 'Delete User' Function",
+                  "status": "Active",
+                  "uuid": "df8b1a98-7a78-4d4b-8c64-18a00e63c841",
+                  "tesCaseFunctionSteps": [],
+                  "id": "23-1"
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "23-2",
+                  "type": "Then",
+                  "text": "Then System should show 'Home header' as 'Hi !'",
+                  "testStepGroupName": "Call 'Delete User' Function",
+                  "status": "Active",
+                  "uuid": "1700fdd0-1805-479c-89ae-0ac49103b2ff",
+                  "tesCaseFunctionSteps": [],
+                  "id": "23-2"
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 24,
+                  "type": "When",
+                  "text": "When User 'Click' on 'Logout' 'Button' and navigate to 'Login' Page",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "c7e6f682-8db9-4cd4-9dec-220797e3d7b1",
+                  "tesCaseFunctionSteps": [],
+                  "id": 24
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "25-1",
+                  "type": "When",
+                  "text": "When User enters 'Username' as '@FTV:User_Name'",
+                  "testStepGroupName": "Call 'Login Unsuccessful' Function",
+                  "status": "Active",
+                  "uuid": "7d9dcb6a-14c5-4613-8997-45e50a7d62a5",
+                  "tesCaseFunctionSteps": [],
+                  "id": "25-1"
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "25-2",
+                  "type": "When",
+                  "text": "When User enters 'Password' as 'John@123'",
+                  "testStepGroupName": "Call 'Login Unsuccessful' Function",
+                  "status": "Active",
+                  "uuid": "ac86bf0f-7c8f-43a9-80fe-37ca4aa84777",
+                  "tesCaseFunctionSteps": [],
+                  "id": "25-2"
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "25-3",
+                  "type": "When",
+                  "text": "When User 'Click' on 'Login' 'Button'",
+                  "testStepGroupName": "Call 'Login Unsuccessful' Function",
+                  "status": "Active",
+                  "uuid": "b8632034-5b0b-4a1e-911b-37e9aca8774e",
+                  "tesCaseFunctionSteps": [],
+                  "id": "25-3"
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 26,
+                  "type": "Then",
+                  "text": "Then System should show 'Message' as 'Username or password is incorrect'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "af7d07b0-d5bc-442c-a357-e51edf36547d",
+                  "tesCaseFunctionSteps": [],
+                  "id": 26
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 27,
+                  "type": "When",
+                  "text": "When User enters 'Password' as 'p'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "c85c50cd-498e-4b9b-8e54-7f1e1e482133",
+                  "tesCaseFunctionSteps": [],
+                  "id": 27
+                },
+                {
+                  "testCaseId": 1999,
+                  "seq": "",
+                  "seqId": "30",
+                  "text": "Abhay"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "testsetConfigFlattend": {
+      "testsets": [
+        {
+          "id": 854,
+          "name": "End To End Globalsqa",
+          "status": "Active",
+          "uuid": "42c49520-b862-11ef-9d72-e34682d3e18b",
+          "appId": 102,
+          "seqId": 1,
+          "testCases": [
+            {
+              "testSetId": 854,
+              "id": 1999,
+              "seqId": 1,
+              "name": "Global sqa workflow validation with Negative Testing",
+              "status": "Active",
+              "uuid": "1e956b61-1306-40f1-ba06-e4c816c3b003",
+              "steps": [
+                {
+                  "testCaseId": 1999,
+                  "seqId": 1,
+                  "type": "Given",
+                  "text": "Given User is on 'Login' Page",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "9b07d700-3538-4735-9669-075d9b8b5519",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2000
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 2,
+                  "type": "When",
+                  "text": "When User 'Click' on 'Register' 'Link' and navigate to 'Register' Page",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "a8b1d685-253e-41b7-a6a9-72e10f26668d",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2001
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 3,
+                  "type": "When",
+                  "text": "When User enters 'First name' as 'F'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "d43f6b4d-b556-403c-b5ce-dfea740c5562",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2002
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 4,
+                  "type": "When",
+                  "text": "When User hits 'Backspace' Key",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "6a8a06a7-ca66-4b91-92a8-03688661080e",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2003
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 5,
+                  "type": "Then",
+                  "text": "Then System should show 'First name error message' as 'First name is required'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "b897149b-50d9-4b4d-8deb-3712779bb4d9",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2004
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 6,
+                  "type": "When",
+                  "text": "When User enters 'Last name' as 'L'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "84829183-4da0-4c66-a0eb-473ea202fa28",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2005
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 7,
+                  "type": "When",
+                  "text": "When User hits 'Backspace' Key",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "079855b9-8ab3-4990-a787-4685351da648",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2006
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 8,
+                  "type": "Then",
+                  "text": "Then System should show 'Last name error message' as 'Last name is required'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "98afe656-c542-4fdb-acb7-9dbc27ff7e78",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2007
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 9,
+                  "type": "When",
+                  "text": "When User enters 'Username' as 'U'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "dbbfe7e4-9dc0-463f-88a3-387394561253",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2008
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 10,
+                  "type": "When",
+                  "text": "When User hits 'Backspace' Key",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "f13c1f88-a435-4cac-8d9e-51d3a56f75c2",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2009
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 11,
+                  "type": "Then",
+                  "text": "Then System should show 'Username error message' as 'Username is required'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "9aa73e62-4d2d-4215-93fd-b4448a03409c",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2010
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 12,
+                  "type": "When",
+                  "text": "When User enters 'Password' as 'P'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "e388bb89-ee6f-4009-8c11-257a6522501a",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2011
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 13,
+                  "type": "When",
+                  "text": "When User hits 'Backspace' Key",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "c5434038-cdb4-4345-888b-89ff086d2314",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2012
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 14,
+                  "type": "Then",
+                  "text": "Then System should show 'Password error message' as 'Password is required'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "6c594b40-fc62-42a7-a9ee-4b37e22d07bf",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2013
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "15-1",
+                  "type": "When",
+                  "text": "When User enters 'First name' as '@FTV:First_Name::@UNQ:First Name'",
+                  "testStepGroupName": "Call 'Registration Successful' Function",
+                  "status": "Active",
+                  "uuid": "ae56889d-3bba-46d3-af86-18196a585b78",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2014
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "15-2",
+                  "type": "When",
+                  "text": "When User enters 'Last name' as '@FTV:Last_Name::@UNQ:Last name'",
+                  "testStepGroupName": "Call 'Registration Successful' Function",
+                  "status": "Active",
+                  "uuid": "e2ebaf53-ba90-4e0b-bd5a-8ffc763748fb",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2015
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "15-3",
+                  "type": "When",
+                  "text": "When User enters 'Username' as '@FTV:User_Name::@UNQ:Username'",
+                  "testStepGroupName": "Call 'Registration Successful' Function",
+                  "status": "Active",
+                  "uuid": "e44b5b47-1fec-4eec-868c-e681413390f0",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2016
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "15-4",
+                  "type": "When",
+                  "text": "When User enters 'Password' as 'John@123'",
+                  "testStepGroupName": "Call 'Registration Successful' Function",
+                  "status": "Active",
+                  "uuid": "33bb2d5b-4f45-4181-a89b-02beeadb34bd",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2017
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "15-5",
+                  "type": "When",
+                  "text": "When User 'Click' on 'Register' 'Button' and navigate to 'Login' Page",
+                  "testStepGroupName": "Call 'Registration Successful' Function",
+                  "status": "Active",
+                  "uuid": "c3f2171b-1775-4aa1-9ee9-7182f676eddc",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2018
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 16,
+                  "type": "When",
+                  "text": "When User enters 'Username' as 'U'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "82a967f2-b269-4779-b808-22a105376b79",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2019
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 17,
+                  "type": "When",
+                  "text": "When User hits 'Backspace' Key",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "cda0d530-23a6-4953-a9ec-984eec43a984",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2020
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 18,
+                  "type": "Then",
+                  "text": "Then System should show 'Username error message' as 'Username is required'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "ba8ba3c4-3444-4980-acd8-6e854ac48820",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2021
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 19,
+                  "type": "When",
+                  "text": "When User enters 'Password' as 'p'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "44e9f722-1cae-4a56-b798-3d37f64f3c08",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2022
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 20,
+                  "type": "When",
+                  "text": "When User hits 'Backspace' Key",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "0794cb13-0f13-46bb-af5b-f49f88a29888",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2023
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 21,
+                  "type": "Then",
+                  "text": "Then System should show 'Password error message' as 'Password is required'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "7ae94e7a-7ca8-41aa-a0a9-cfc8fe8e675b",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2024
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "22-1",
+                  "type": "When",
+                  "text": "When User enters 'Username' as '@FTV:User_Name'",
+                  "testStepGroupName": "Call 'Login Successful' Function",
+                  "status": "Active",
+                  "uuid": "799f1e2b-cc92-490f-a6f7-aa882d0d35c0",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2025
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "22-2",
+                  "type": "When",
+                  "text": "When User enters 'Password' as 'John@123'",
+                  "testStepGroupName": "Call 'Login Successful' Function",
+                  "status": "Active",
+                  "uuid": "3d8c5f93-7991-4722-a0b0-fed00ddfdaf5",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2026
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "22-3",
+                  "type": "When",
+                  "text": "When User 'Click' on 'Login' 'Button' and navigate to 'Home' Page",
+                  "testStepGroupName": "Call 'Login Successful' Function",
+                  "status": "Active",
+                  "uuid": "a6cabcb2-be40-42d5-aff2-0a756e43c4c5",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2027
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "23-1",
+                  "type": "When",
+                  "text": "When User 'Click' on 'Delete' 'Link'",
+                  "testStepGroupName": "Call 'Delete User' Function",
+                  "status": "Active",
+                  "uuid": "df8b1a98-7a78-4d4b-8c64-18a00e63c841",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2028
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "23-2",
+                  "type": "Then",
+                  "text": "Then System should show 'Home header' as 'Hi !'",
+                  "testStepGroupName": "Call 'Delete User' Function",
+                  "status": "Active",
+                  "uuid": "1700fdd0-1805-479c-89ae-0ac49103b2ff",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2029
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 24,
+                  "type": "When",
+                  "text": "When User 'Click' on 'Logout' 'Button' and navigate to 'Login' Page",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "c7e6f682-8db9-4cd4-9dec-220797e3d7b1",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2030
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "25-1",
+                  "type": "When",
+                  "text": "When User enters 'Username' as '@FTV:User_Name'",
+                  "testStepGroupName": "Call 'Login Unsuccessful' Function",
+                  "status": "Active",
+                  "uuid": "7d9dcb6a-14c5-4613-8997-45e50a7d62a5",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2031
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "25-2",
+                  "type": "When",
+                  "text": "When User enters 'Password' as 'John@123'",
+                  "testStepGroupName": "Call 'Login Unsuccessful' Function",
+                  "status": "Active",
+                  "uuid": "ac86bf0f-7c8f-43a9-80fe-37ca4aa84777",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2032
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": "25-3",
+                  "type": "When",
+                  "text": "When User 'Click' on 'Login' 'Button'",
+                  "testStepGroupName": "Call 'Login Unsuccessful' Function",
+                  "status": "Active",
+                  "uuid": "b8632034-5b0b-4a1e-911b-37e9aca8774e",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2033
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 26,
+                  "type": "Then",
+                  "text": "Then System should show 'Message' as 'Username or password is incorrect'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "af7d07b0-d5bc-442c-a357-e51edf36547d",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2034
+                },
+                {
+                  "testCaseId": 1999,
+                  "seqId": 27,
+                  "type": "When",
+                  "text": "When User enters 'Password' as 'p'",
+                  "testStepGroupName": "",
+                  "status": "Active",
+                  "uuid": "c85c50cd-498e-4b9b-8e54-7f1e1e482133",
+                  "tesCaseFunctionSteps": [],
+                  "id": 2035
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "apiconfig": [],
+    "application": [
+      {
+        "USER_NAME": "Chirag",
+        "USER_UUID": "",
+        "APP_UUID": "f746e178-7057-4b3d-9771-6bd8aed8a3be",
+        "TENANT_UUID": "58517956-a079-11ed-9d90-4787e808dcfd",
+        "TEST_SUITE_UUID": "chirag5674",
+        "VERSION_NUMBER": 1
+      }
+    ]
+  }
+}

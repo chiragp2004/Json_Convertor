@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
+import ThemeToggle from "./ThemeToggle";
 import "./App.css";
 
+import "./theme.css";
+
+// Full App.js — crash-safe and preserves all features from your previous code
 export default function App() {
   const [activeRoot, setActiveRoot] = useState(null);
   const [expandedPage, setExpandedPage] = useState(null);
   const [expandedTestSet, setExpandedTestSet] = useState(null);
   const [expandedTestCase, setExpandedTestCase] = useState(null);
-  const [jsonData, setJsonData] = useState(null);
+
+  // Initialize jsonData as object with data property to avoid null errors
+  const [jsonData, setJsonData] = useState({ data: {} });
   const [selectedFileName, setSelectedFileName] = useState("No file chosen");
 
   const [editedSteps, setEditedSteps] = useState([]);
@@ -18,93 +24,24 @@ export default function App() {
   const [showSettings, setShowSettings] = useState(false);
   const [editedApplication, setEditedApplication] = useState({});
 
+  // Load from backend on mount — guard against empty or malformed responses
   useEffect(() => {
     fetch("http://localhost:5000/api/data")
       .then((res) => res.json())
       .then((data) => {
+        if (!data || typeof data !== "object") data = { data: {} };
+        if (!data.data) data.data = {};
         setJsonData(data);
         setSelectedFileName("data.json (from backend)");
-        // Initialize editedApplication with current application data
-        if (data?.data?.application) {
-          setEditedApplication(data.data.application);
-        }
+        if (data.data.application) setEditedApplication(data.data.application);
       })
-      .catch((err) => console.error("Failed to load data:", err));
+      .catch((err) => {
+        console.error("Failed to load data:", err);
+        setJsonData({ data: {} });
+      });
   }, []);
 
-  const downloadJson = () => {
-    if (!jsonData) return alert("No JSON data to download.");
-
-    // Merge edited steps if needed
-    const updatedData = { ...jsonData };
-    if (expandedTestSet !== null && expandedTestCase !== null) {
-      const baseSteps = getBaseSteps();
-      const newSteps = [];
-      for (let i = 0; i < baseSteps.length; i++) {
-        if (!deletedIndices.has(i)) newSteps.push({ ...baseSteps[i], ...(editedSteps[i] || {}) });
-      }
-      for (let i = baseSteps.length; i < editedSteps.length; i++) {
-        if (editedSteps[i]) newSteps.push({ ...editedSteps[i] });
-      }
-      updatedData.data.testsetConfig.testsets[expandedTestSet].testCases[expandedTestCase].steps = newSteps;
-    }
-
-    // ✅ Ask user for new file name
-    let filename = prompt("Enter file name:", selectedFileName.replace(" (from backend)", "").replace(" (local)", ""));
-    if (!filename) return; // cancel download if user cancels
-
-    if (!filename.endsWith(".json")) filename += ".json";
-
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(updatedData, null, 2));
-    const downloadAnchorNode = document.createElement("a");
-    downloadAnchorNode.setAttribute("href", dataStr);
-    downloadAnchorNode.setAttribute("download", filename);
-    document.body.appendChild(downloadAnchorNode);
-    downloadAnchorNode.click();
-    downloadAnchorNode.remove();
-  };
-
-  const saveToBackend = (updatedData) => {
-    fetch("http://localhost:5000/api/data", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedData),
-    })
-      .then((res) => res.json())
-      .then((msg) => console.log("✅ Saved:", msg))
-      .catch((err) => console.error("❌ Save failed:", err));
-  };
-
-  const handleFileUpload = (e) => {
-    const fileInput = e.target;
-    const file = fileInput.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const parsedData = JSON.parse(event.target.result);
-        setJsonData(parsedData);
-        setActiveRoot(null);
-        setSelectedFileName(file.name + " (local)");
-        setEditedSteps([]);
-        setDeletedIndices(new Set());
-        setNewStepIndex(null);
-        setEditableCell(null);
-        // Update editedApplication with new data
-        if (parsedData?.data?.application) {
-          setEditedApplication(parsedData.data.application);
-        }
-      } catch {
-        alert("Invalid JSON file!");
-      }
-    };
-    reader.readAsText(file);
-
-    // Reset file input so same file can be selected again
-    fileInput.value = null;
-  };
-
+  // Utility: format keys nicely
   const formatHeader = (key) =>
     key
       ? key
@@ -115,6 +52,7 @@ export default function App() {
           .join(" ")
       : "";
 
+  // --- Steps helpers (safe access) ---
   const getBaseSteps = () =>
     jsonData?.data?.testsetConfig?.testsets?.[expandedTestSet]?.testCases?.[expandedTestCase]?.steps || [];
 
@@ -147,98 +85,80 @@ export default function App() {
   const isEditableKey = (k) => k !== "testCaseId";
   const focusCell = (row, key) => setEditableCell({ row, col: key });
 
+  // --- Keyboard navigation inside step inputs ---
   const handleCellKeyDown = (e, rowIdx, key, visibleKeys) => {
     const input = e.target;
     const currentIndex = visibleKeys.indexOf(key);
-    
-    // --- Helper function to find the next/prev editable column index ---
+
+    // Helper to walk to next/prev editable index
     const findNextEditableIndex = (start, step) => {
-        let nextIndex = start + step;
-        while (nextIndex >= 0 && nextIndex < visibleKeys.length && !isEditableKey(visibleKeys[nextIndex])) {
-            nextIndex += step;
-        }
-        return nextIndex;
+      let nextIndex = start + step;
+      while (nextIndex >= 0 && nextIndex < visibleKeys.length && !isEditableKey(visibleKeys[nextIndex])) {
+        nextIndex += step;
+      }
+      return nextIndex;
     };
 
     if (e.key === "Tab" || (e.key === "ArrowRight" && input.selectionStart === input.value.length)) {
-        // --- Smart Right Arrow and Tab Navigation ---
-        e.preventDefault();
-        
-        let nextIndex = findNextEditableIndex(currentIndex, 1);
-        
-        if (nextIndex < visibleKeys.length) {
-            // Move to next column in the current row
-            focusCell(rowIdx, visibleKeys[nextIndex]);
-        } else {
-            // Move to the first editable column of the next row
-            // const base = getBaseSteps();
-            const displayed = getDisplayedSteps();
-            const totalRows = displayed.filter((_, i) => !deletedIndices.has(i)).length;
+      e.preventDefault();
+      let nextIndex = findNextEditableIndex(currentIndex, 1);
 
-            if (rowIdx + 1 < totalRows) {
-                const firstEditable = visibleKeys.find(isEditableKey);
-                if (firstEditable) {
-                    focusCell(rowIdx + 1, firstEditable);
-                } else {
-                    setEditableCell(null);
-                }
-            } else {
-                setEditableCell(null);
-            }
+      if (nextIndex < visibleKeys.length) {
+        focusCell(rowIdx, visibleKeys[nextIndex]);
+      } else {
+        const displayed = getDisplayedSteps();
+        // compute visible rows (skip deleted)
+        const totalRows = displayed.filter((_, i) => !deletedIndices.has(i)).length;
+        if (rowIdx + 1 < totalRows) {
+          const firstEditable = visibleKeys.find(isEditableKey);
+          if (firstEditable) focusCell(rowIdx + 1, firstEditable);
+          else setEditableCell(null);
+        } else {
+          setEditableCell(null);
         }
+      }
     } else if (e.key === "ArrowLeft" && input.selectionStart === 0) {
-        // --- Left Arrow Navigation Fix (Only move if cursor is at the start) ---
-        e.preventDefault();
-        
-        let prevIndex = findNextEditableIndex(currentIndex, -1);
-        
-        if (prevIndex >= 0) {
-            // Move to previous column in the current row
-            focusCell(rowIdx, visibleKeys[prevIndex]);
-            
-            // Set cursor to the end of the newly focused input
+      e.preventDefault();
+      let prevIndex = findNextEditableIndex(currentIndex, -1);
+      if (prevIndex >= 0) {
+        focusCell(rowIdx, visibleKeys[prevIndex]);
+        setTimeout(() => {
+          const prevInput = document.querySelector(`td[data-row="${rowIdx}"][data-col="${visibleKeys[prevIndex]}"] input`);
+          if (prevInput) {
+            prevInput.selectionStart = prevInput.selectionEnd = prevInput.value.length;
+          }
+        }, 0);
+      } else {
+        if (rowIdx > 0) {
+          const prevRowIdx = rowIdx - 1;
+          let lastEditableIndex = findNextEditableIndex(visibleKeys.length, -1);
+          if (lastEditableIndex >= 0) {
+            focusCell(prevRowIdx, visibleKeys[lastEditableIndex]);
             setTimeout(() => {
-                const prevInput = document.querySelector(`td[data-row="${rowIdx}"][data-col="${visibleKeys[prevIndex]}"] input`);
-                if (prevInput) {
-                    prevInput.selectionStart = prevInput.selectionEnd = prevInput.value.length;
-                }
+              const prevInput = document.querySelector(`td[data-row="${prevRowIdx}"][data-col="${visibleKeys[lastEditableIndex]}"] input`);
+              if (prevInput) {
+                prevInput.selectionStart = prevInput.selectionEnd = prevInput.value.length;
+              }
             }, 0);
-        } else {
-            // Move to the last editable column of the previous row
-            if (rowIdx > 0) {
-                const prevRowIdx = rowIdx - 1;
-                let lastEditableIndex = findNextEditableIndex(visibleKeys.length, -1);
-                
-                if (lastEditableIndex >= 0) {
-                    focusCell(prevRowIdx, visibleKeys[lastEditableIndex]);
-                    
-                    // Set cursor to the end of the newly focused input
-                    setTimeout(() => {
-                        const prevInput = document.querySelector(`td[data-row="${prevRowIdx}"][data-col="${visibleKeys[lastEditableIndex]}"] input`);
-                        if (prevInput) {
-                            prevInput.selectionStart = prevInput.selectionEnd = prevInput.value.length;
-                        }
-                    }, 0);
-                } else {
-                    setEditableCell(null);
-                }
-            } else {
-                setEditableCell(null);
-            }
-        }
-    } else if (e.key === "Enter") {
-        // --- Enter key behavior (same as before: just move to the next editable cell) ---
-        e.preventDefault();
-        
-        let nextIndex = findNextEditableIndex(currentIndex, 1);
-
-        if (nextIndex < visibleKeys.length) {
-            focusCell(rowIdx, visibleKeys[nextIndex]);
-        } else {
+          } else {
             setEditableCell(null);
+          }
+        } else {
+          setEditableCell(null);
         }
+      }
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      let nextIndex = findNextEditableIndex(currentIndex, 1);
+      if (nextIndex < visibleKeys.length) {
+        focusCell(rowIdx, visibleKeys[nextIndex]);
+      } else {
+        setEditableCell(null);
+      }
     }
-};
+  };
+
+  // --- Local edit helpers ---
   const updateLocalStepValue = (rowIdx, key, value) => {
     setEditedSteps((prev) => {
       const updated = [...prev];
@@ -251,9 +171,14 @@ export default function App() {
   const addStepLocal = () => {
     const base = getBaseSteps();
     const idx = Math.max(editedSteps.length, base.length);
-    const parentTestCaseId = jsonData?.data?.testsetConfig?.testsets?.[expandedTestSet]?.testCases?.[expandedTestCase]?.id || "";
+    const parentTestCaseId =
+      jsonData?.data?.testsetConfig?.testsets?.[expandedTestSet]?.testCases?.[expandedTestCase]?.id || "";
     const newStep = { testCaseId: parentTestCaseId, seq: "" };
-    setEditedSteps((prev) => { const updated = [...prev]; updated[idx] = newStep; return updated; });
+    setEditedSteps((prev) => {
+      const updated = [...prev];
+      updated[idx] = newStep;
+      return updated;
+    });
     setNewStepIndex(idx);
     setTimeout(() => focusCell(idx, "seq"), 50);
   };
@@ -262,12 +187,32 @@ export default function App() {
     const base = getBaseSteps();
     if (stepIdx < base.length) {
       setDeletedIndices((prev) => new Set(prev).add(stepIdx));
-      setEditedSteps((prev) => { const updated = [...prev]; updated[stepIdx] = undefined; return updated; });
+      setEditedSteps((prev) => {
+        const updated = [...prev];
+        updated[stepIdx] = undefined;
+        return updated;
+      });
     } else {
-      setEditedSteps((prev) => { const updated = [...prev]; updated[stepIdx] = undefined; return updated; });
+      setEditedSteps((prev) => {
+        const updated = [...prev];
+        updated[stepIdx] = undefined;
+        return updated;
+      });
       if (newStepIndex === stepIdx) setNewStepIndex(null);
     }
     if (editableCell?.row === stepIdx) setEditableCell(null);
+  };
+
+  // --- Backend interactions ---
+  const saveToBackend = (updatedData) => {
+    fetch("http://localhost:5000/api/data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedData),
+    })
+      .then((res) => res.json())
+      .then((msg) => console.log("✅ Saved:", msg))
+      .catch((err) => console.error("❌ Save failed:", err));
   };
 
   const saveChangesToBackend = () => {
@@ -280,10 +225,20 @@ export default function App() {
     for (let i = base.length; i < editedSteps.length; i++) {
       if (editedSteps[i]) newSteps.push({ ...editedSteps[i] });
     }
+    // apply to a guarded copy
     const updatedData = { ...jsonData };
     updatedData.data = updatedData.data || {};
     updatedData.data.testsetConfig = updatedData.data.testsetConfig || {};
     updatedData.data.testsetConfig.testsets = updatedData.data.testsetConfig.testsets || [];
+    // ensure target testset/testcase exist (safe guard)
+    if (!updatedData.data.testsetConfig.testsets[expandedTestSet]) {
+      alert("Cannot save: selected testset not available.");
+      return;
+    }
+    if (!updatedData.data.testsetConfig.testsets[expandedTestSet].testCases[expandedTestCase]) {
+      alert("Cannot save: selected testcase not available.");
+      return;
+    }
     updatedData.data.testsetConfig.testsets[expandedTestSet].testCases[expandedTestCase].steps = newSteps;
     setJsonData(updatedData);
     saveToBackend(updatedData);
@@ -302,99 +257,83 @@ export default function App() {
     alert("Local edits cancelled");
   };
 
+  // --- Settings (Application) dialog ---
   const openSettings = () => {
-  if (jsonData?.data?.application) {
+    if (jsonData?.data?.application) {
+      const originalApp = Array.isArray(jsonData.data.application)
+        ? jsonData.data.application[0]
+        : jsonData.data.application;
+      setEditedApplication({ ...originalApp });
+    } else {
+      setEditedApplication({});
+    }
+    setShowSettings(true);
+  };
+
+  const closeSettings = () => setShowSettings(false);
+
+  const handleApplicationChange = (key, value) =>
+    setEditedApplication((prev) => ({ ...prev, [key]: value }));
+
+  const saveApplicationSettings = () => {
+    if (!jsonData) return;
     const originalApp = Array.isArray(jsonData.data.application)
       ? jsonData.data.application[0]
       : jsonData.data.application;
-
-    // Initialize editedApplication with all fields from original
-    setEditedApplication({ ...originalApp });
-  }
-  setShowSettings(true);
-};
-
-
-  const closeSettings = () => {
+    const mergedApp = { ...(originalApp || {}), ...editedApplication };
+    const updatedData = {
+      ...jsonData,
+      data: {
+        ...jsonData.data,
+        application: [mergedApp],
+      },
+    };
+    setJsonData(updatedData);
+    saveToBackend(updatedData);
     setShowSettings(false);
+    alert("Application settings saved!");
   };
 
-  const handleApplicationChange = (key, value) => {
-    setEditedApplication(prev => ({
-      ...prev,
-      [key]: value
-    }));
-  };
-
- const saveApplicationSettings = () => {
-  if (!jsonData) return;
-
-  const originalApp = Array.isArray(jsonData.data.application)
-    ? jsonData.data.application[0]
-    : jsonData.data.application;
-
-  // Merge edited fields over original
-  const mergedApp = { ...originalApp, ...editedApplication };
-
-  const updatedData = {
-    ...jsonData,
-    data: {
-      ...jsonData.data,
-      application: [mergedApp], // keep array structure
-    },
-  };
-
-  setJsonData(updatedData);
-  saveToBackend(updatedData);
-  setShowSettings(false);
-  alert("Application settings saved!");
-};
-
-
-  // Function to render application data as table (same as in main content)
   const renderApplicationTable = (data) => {
-  if (!data) return <p>No application data available</p>;
+    if (!data) return <p>No application data available</p>;
 
-  // If array → take the first object
-  const appData = Array.isArray(data) ? data[0] : data;
-  if (!appData || typeof appData !== "object")
-    return <p>No valid application data</p>;
+    const appData = Array.isArray(data) ? data[0] : data;
+    if (!appData || typeof appData !== "object") return <p>No valid application data</p>;
 
-  const keys = Object.keys(appData);
+    const keys = Object.keys(appData);
 
-  return (
-    <div className="table-wrapper">
-      <table className="json-table application-table">
-        <thead>
-          <tr>
-            <th>Property</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          {keys.map((key) => (
-            <tr key={key}>
-              <td style={{ fontWeight: "600", background: "#f8fafc" }}>
-                {formatHeader(key)}
-              </td>
-              <td>
-                <input
-                  type="text"
-                  value={editedApplication[key] ?? appData[key] ?? ""}
-                  onChange={(e) => handleApplicationChange(key, e.target.value)}
-                  className="application-input"
-                  placeholder={`Enter ${formatHeader(key)}`}
-                />
-              </td>
+    return (
+      <div className="table-wrapper">
+        <table className="json-table application-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Value</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
+          </thead>
+          <tbody>
+            {keys.map((key) => (
+              <tr key={key}>
+                <td style={{ fontWeight: "600", background: "#f8fafc" }}>{formatHeader(key)}</td>
+                <td>
+                  <input
+                    type="text"
+                    value={editedApplication[key] ?? appData[key] ?? ""}
+                    onChange={(e) => handleApplicationChange(key, e.target.value)}
+                    className="application-input"
+                    placeholder={`Enter ${formatHeader(key)}`}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+     
+      </div>
+    );
+  };
 
-  // -------- Column Resize Handler --------
+  // --- Column resizing ---
   const handleMouseDown = (e, th) => {
     const startX = e.clientX;
     const startWidth = th.offsetWidth;
@@ -413,11 +352,13 @@ export default function App() {
     window.addEventListener("mouseup", handleMouseUp);
   };
 
+  // --- Table rendering for arrays/objects (safe) ---
   const renderTable = (data, level = "root") => {
-    if (!data) return <p>No data</p>;
+    if (data === undefined || data === null) return <p>No data</p>;
 
     if (Array.isArray(data)) {
-      let keysToDisplay = Object.keys(data[0] || {});
+      const firstRow = data[0] || {};
+      let keysToDisplay = Object.keys(firstRow);
       if (level === "testsets") keysToDisplay = keysToDisplay.filter((k) => k !== "testCases" && k !== "steps");
       if (level === "testcases") keysToDisplay = keysToDisplay.filter((k) => k !== "steps");
       if (level === "pageconfig") keysToDisplay = keysToDisplay.filter((k) => k !== "pageElements");
@@ -428,23 +369,21 @@ export default function App() {
             <thead>
               <tr>
                 <th style={{ width: "30px" }}></th>
-                {keysToDisplay.map((key, i) => (
+                {keysToDisplay.map((key) => (
                   <th key={key} style={{ position: "relative" }}>
                     {formatHeader(key)}
-                    <div
-                      className="resize-handle"
-                      onMouseDown={(e) => handleMouseDown(e, e.target.parentElement)}
-                    />
+                    <div className="resize-handle" onMouseDown={(e) => handleMouseDown(e, e.target.parentElement)} />
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {data.map((row, idx) => {
+                const safeRow = row || {};
                 const hasChildren =
-                  (level === "pageconfig" && row.pageElements) ||
-                  (level === "testsets" && row.testCases) ||
-                  (level === "testcases" && row.steps);
+                  (level === "pageconfig" && safeRow.pageElements) ||
+                  (level === "testsets" && safeRow.testCases) ||
+                  (level === "testcases" && safeRow.steps);
                 const isExpanded =
                   (level === "pageconfig" && expandedPage === idx) ||
                   (level === "testsets" && expandedTestSet === idx) ||
@@ -458,38 +397,44 @@ export default function App() {
                         onClick={() => {
                           if (!hasChildren) return;
                           if (level === "pageconfig") setExpandedPage(isExpanded ? null : idx);
-                          if (level === "testsets") setExpandedTestSet(isExpanded ? null : idx);
+                          if (level === "testsets") {
+                            setExpandedTestSet(isExpanded ? null : idx);
+                            setExpandedTestCase(null);
+                            setEditedSteps([]);
+                            setDeletedIndices(new Set());
+                            setNewStepIndex(null);
+                            setEditableCell(null);
+                          }
                           if (level === "testcases") setExpandedTestCase(isExpanded ? null : idx);
                         }}
                       >
                         {hasChildren ? (isExpanded ? "➖" : "➕") : ""}
                       </td>
+
                       {keysToDisplay.map((key, i) => (
                         <td key={i}>
                           {key === "navigation" ? (
-                            row[key]?.navigationValue ? (
-                              <a href={row[key].navigationValue} target="_blank" rel="noopener noreferrer">
-                                {row[key].navigationValue}
+                            safeRow[key]?.navigationValue ? (
+                              <a href={safeRow[key].navigationValue} target="_blank" rel="noopener noreferrer">
+                                {safeRow[key].navigationValue}
                               </a>
                             ) : (
                               "-"
                             )
-                          ) : typeof row[key] === "object" ? (
-                            JSON.stringify(row[key])
+                          ) : typeof safeRow[key] === "object" ? (
+                            JSON.stringify(safeRow[key])
                           ) : (
-                            String(row[key])
+                            String(safeRow[key])
                           )}
                         </td>
                       ))}
                     </tr>
 
-                    {/* PageConfig nested table */}
-                    {level === "pageconfig" && expandedPage === idx && row.pageElements && (
+                    {/* nested pageElements */}
+                    {level === "pageconfig" && expandedPage === idx && safeRow.pageElements && (
                       <tr>
                         <td colSpan={keysToDisplay.length + 1} style={{ padding: 0 }}>
-                          <div className="nested-table-wrapper">
-                            {renderTable(row.pageElements, "pageelements")}
-                          </div>
+                          <div className="nested-table-wrapper">{renderTable(safeRow.pageElements, "pageelements")}</div>
                         </td>
                       </tr>
                     )}
@@ -499,18 +444,18 @@ export default function App() {
             </tbody>
           </table>
 
-          {/* TestSets nested */}
-          {level === "testsets" && expandedTestSet !== null && data[expandedTestSet].testCases && (
+          {/* If testsets level — show nested testcases below */}
+          {level === "testsets" && expandedTestSet !== null && data[expandedTestSet]?.testCases && (
             <div style={{ marginTop: "10px" }}>
-              <h3>Test Cases for {data[expandedTestSet].name}</h3>
+              <h3>Test Cases for {data[expandedTestSet]?.name ?? "—"}</h3>
               {renderTable(data[expandedTestSet].testCases, "testcases")}
             </div>
           )}
 
-          {/* TestCases Steps */}
-          {level === "testcases" && expandedTestCase !== null && data[expandedTestCase].steps && (
+          {/* If testcases level — show steps editor when a testcase is expanded */}
+          {level === "testcases" && expandedTestCase !== null && data[expandedTestCase]?.steps && (
             <div className="steps-table-wrapper">
-              <h3>Steps for {data[expandedTestCase].name}</h3>
+              <h3>Steps for {data[expandedTestCase]?.name ?? "—"}</h3>
               <div className="steps-table-container">
                 {(() => {
                   const displayed = getDisplayedSteps();
@@ -520,13 +465,10 @@ export default function App() {
                       <thead>
                         <tr>
                           <th>#</th>
-                          {visibleKeys.map((key, i) => (
+                          {visibleKeys.map((key) => (
                             <th key={key} style={{ position: "" }}>
                               {formatHeader(key)}
-                              <div
-                                className="resize-handle"
-                                onMouseDown={(e) => handleMouseDown(e, e.target.parentElement)}
-                              />
+                              <div className="resize-handle" onMouseDown={(e) => handleMouseDown(e, e.target.parentElement)} />
                             </th>
                           ))}
                           <th>Action</th>
@@ -535,7 +477,6 @@ export default function App() {
                       <tbody>
                         {displayed.map((step, stepIdx) => {
                           if (deletedIndices.has(stepIdx)) return null;
-
                           return (
                             <tr key={stepIdx} className={newStepIndex === stepIdx ? "new-step-row" : ""}>
                               <td>{stepIdx + 1}</td>
@@ -582,6 +523,7 @@ export default function App() {
                   );
                 })()}
               </div>
+
               <div className="steps-actions">
                 <button onClick={addStepLocal}>➕ Add Step</button>
                 <button
@@ -597,52 +539,146 @@ export default function App() {
               </div>
             </div>
           )}
+          
         </div>
       );
     }
 
+    // If not array, just show value/stringified
     return <span>{String(data)}</span>;
   };
 
-  const rootKeys = jsonData ? Object.keys(jsonData.data).filter(key => key !== "application") : [];
+  // compute rootKeys safely (exclude application)
+  const rootKeys = jsonData && jsonData.data ? Object.keys(jsonData.data).filter((key) => key !== "application") : [];
+
+  // --- File upload/download handlers ---
+  const handleFileUpload = (e) => {
+    const fileInput = e.target;
+    const file = fileInput.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const parsedData = JSON.parse(event.target.result);
+        // If top-level already matches your server shape (has data) keep it; otherwise wrap
+        if (parsedData && typeof parsedData === "object" && parsedData.data) {
+          setJsonData(parsedData);
+        } else if (parsedData && typeof parsedData === "object") {
+          setJsonData({ data: parsedData });
+        } else {
+          setJsonData({ data: {} });
+        }
+        setActiveRoot(null);
+        setSelectedFileName(file.name + " (local)");
+        setEditedSteps([]);
+        setDeletedIndices(new Set());
+        setNewStepIndex(null);
+        setEditableCell(null);
+        if (parsedData?.data?.application) {
+          setEditedApplication(parsedData.data.application);
+        } else if (parsedData?.application) {
+          setEditedApplication(parsedData.application);
+        } else {
+          setEditedApplication({});
+        }
+      } catch {
+        alert("Invalid JSON file!");
+      }
+    };
+    reader.readAsText(file);
+
+    // reset to allow same file chosen again
+    fileInput.value = null;
+  };
+
+  const downloadJson = () => {
+    if (!jsonData) return alert("No JSON data to download.");
+
+    // Merge edited steps before download if editing current testcase
+    const updatedData = JSON.parse(JSON.stringify(jsonData)); // deep copy
+    if (expandedTestSet !== null && expandedTestCase !== null) {
+      const baseSteps = getBaseSteps();
+      const newSteps = [];
+      for (let i = 0; i < baseSteps.length; i++) {
+        if (!deletedIndices.has(i)) newSteps.push({ ...baseSteps[i], ...(editedSteps[i] || {}) });
+      }
+      for (let i = baseSteps.length; i < editedSteps.length; i++) {
+        if (editedSteps[i]) newSteps.push({ ...editedSteps[i] });
+      }
+      if (!updatedData.data) updatedData.data = {};
+      if (!updatedData.data.testsetConfig) updatedData.data.testsetConfig = {};
+      if (!updatedData.data.testsetConfig.testsets) updatedData.data.testsetConfig.testsets = [];
+      if (updatedData.data.testsetConfig.testsets[expandedTestSet] && updatedData.data.testsetConfig.testsets[expandedTestSet].testCases[expandedTestCase]) {
+        updatedData.data.testsetConfig.testsets[expandedTestSet].testCases[expandedTestCase].steps = newSteps;
+      }
+    }
+
+    let filename = prompt("Enter file name:", selectedFileName.replace(" (from backend)", "").replace(" (local)", ""));
+    if (!filename) return;
+    if (!filename.endsWith(".json")) filename += ".json";
+
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(updatedData, null, 2));
+    const downloadAnchorNode = document.createElement("a");
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", filename);
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  };
+
+  // Reset to empty store button (optional)
+  const resetToEmpty = () => {
+    if (!window.confirm("Reset data to empty? This will clear UI state (not backend).")) return;
+    setJsonData({ data: {} });
+    setActiveRoot(null);
+    setEditedSteps([]);
+    setDeletedIndices(new Set());
+    setSelectedFileName("No file chosen");
+  };
 
   return (
     <div className="layout">
       <div className="sidebar">
         <h3>Sections</h3>
+        <ThemeToggle />
         <div className="file-upload-wrapper">
           <label htmlFor="fileInput" className="file-label">Choose JSON File</label>
           <input type="file" id="fileInput" accept=".json" onChange={handleFileUpload} />
           <span className="file-name">{selectedFileName}</span>
-          <button onClick={downloadJson} className="download-btn">
-            📥 Download JSON
-          </button>
+          <button onClick={downloadJson} className="download-btn">📥 Download JSON</button>
+          <button onClick={resetToEmpty} className="reset-btn" style={{ marginLeft: "8px" }}>♻️ Clear</button>
         </div>
 
-        {rootKeys.map((rootKey) => (
-          <button
-            key={rootKey}
-            className={`menu-btn ${activeRoot === rootKey ? "active" : ""}`}
-            onClick={() => {
-              setActiveRoot(rootKey);
-              setExpandedPage(null);
-              setExpandedTestSet(null);
-              setExpandedTestCase(null);
-              setEditedSteps([]);
-              setDeletedIndices(new Set());
-              setNewStepIndex(null);
-              setEditableCell(null);
-            }}
-          >
-            {formatHeader(rootKey)}
-          </button>
-        ))}
+        {rootKeys.length > 0 ? (
+          rootKeys.map((rootKey) => (
+            <button
+              key={rootKey}
+              className={`menu-btn ${activeRoot === rootKey ? "active" : ""}`}
+              onClick={() => {
+                setActiveRoot(rootKey);
+                setExpandedPage(null);
+                setExpandedTestSet(null);
+                setExpandedTestCase(null);
+                setEditedSteps([]);
+                setDeletedIndices(new Set());
+                setNewStepIndex(null);
+                setEditableCell(null);
+              }}
+            >
+              {formatHeader(rootKey)}
+            </button>
+          ))
+        ) : (
+          <p style={{ marginTop: "10px", fontSize: "14px", color: "#777" }}>No data sections</p>
+        )}
 
-        {/* Settings Icon at Bottom */}
+        <div style={{ marginTop: "auto", padding: "10px" }}>
+          
+        </div>
+
         <div className="settings-icon-container">
-          <button className="settings-icon-btn" onClick={openSettings} title="Application Settings">
-            ⚙️ Application Settings
-          </button>
+          <button className="settings-icon-btn" onClick={openSettings} title="Application Settings">⚙️ Application Settings</button>
         </div>
       </div>
 
@@ -650,10 +686,10 @@ export default function App() {
         <h2>JSON Viewer (Backend Connected)</h2>
         {activeRoot ? (
           activeRoot === "testsetConfig" || activeRoot === "testsetConfigFlattend"
-            ? renderTable(jsonData.data[activeRoot].testsets, "testsets")
+            ? renderTable(jsonData.data[activeRoot]?.testsets || [], "testsets")
             : activeRoot === "pageConfig"
-            ? renderTable(jsonData.data[activeRoot], "pageconfig")
-            : renderTable(jsonData.data[activeRoot])
+            ? renderTable(jsonData.data[activeRoot] || [], "pageconfig")
+            : renderTable(jsonData.data[activeRoot] ?? jsonData.data[activeRoot] ?? "")
         ) : (
           <p className="placeholder">Select a section from the left menu</p>
         )}
@@ -668,15 +704,11 @@ export default function App() {
               <button className="close-btn" onClick={closeSettings}>×</button>
             </div>
             <div className="dialog-content">
-              {jsonData?.data?.application ? (
-                renderApplicationTable(jsonData.data.application)
-              ) : (
-                <p>No application data available</p>
-              )}
+              {jsonData?.data?.application ? renderApplicationTable(jsonData.data.application) : <p>No application data available</p>}
             </div>
             <div className="dialog-actions">
               <button onClick={saveApplicationSettings} className="save-btn">Save Changes</button>
-              <button onClick={closeSettings} className="cancel-btn"> Cancel</button>
+              <button onClick={closeSettings} className="cancel-btn">Cancel</button>
             </div>
           </div>
         </div>

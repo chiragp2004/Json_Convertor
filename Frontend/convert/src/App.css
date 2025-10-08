@@ -485,7 +485,7 @@ body {
     border-bottom: 1px solid var(--color-border-subtle);
     border-right: 1px solid var(--color-border-subtle);
     white-space: nowrap;
-    position: relative;
+    position:relative;
     transition: background-color var(--transition-speed-fast) ease;
 }
 
@@ -709,7 +709,7 @@ body {
     gap: 12px;
     padding: 16px;
     justify-content: flex-start;
-    background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+    background: white;
     border-top: 1px solid #e5e7eb;
     min-width: 100%; 
     box-sizing: border-box; 
@@ -797,13 +797,15 @@ button:disabled::before {
 /* --- Nested Table Headers --- */
 /* Refined style to be clearly secondary to the main table header */
 .table-wrapper h3 {
+    position: sticky;
+    box-sizing: border-box;
     font-size: 18px;
     font-weight: 800;
     color: var(--color-text-dark);
     margin: 20px 0 12px 0;
     padding-left: 18px;
     border-left: 5px solid #ff5a00;
-    position: relative;
+    
     transition: all var(--transition-speed-fast) ease-in-out;
     letter-spacing: 0.2px;
     /* Added a subtle shadow to lift it slightly */
@@ -1077,7 +1079,7 @@ button:disabled::before {
     justify-content: flex-end;
     padding: 20px 30px;
     border-top: 1px solid #e5e7eb;
-    background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+    background:white
 }
 
 .dialog-actions .save-btn {
