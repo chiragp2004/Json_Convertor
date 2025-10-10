@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PageElementsEditor from "./PageElementsEditor";
 import ThemeToggle from "./ThemeToggle";
 import "./App.css";
 
@@ -249,13 +250,32 @@ export default function App() {
     alert("Changes saved to backend!");
   };
 
-  const cancelLocalEdits = () => {
-    setEditedSteps([]);
-    setDeletedIndices(new Set());
-    setNewStepIndex(null);
-    setEditableCell(null);
-    alert("Local edits cancelled");
-  };
+const cancelLocalEdits = () => {
+  // If there is a new row being added, reset all fields except testCaseId
+  if (newStepIndex !== null) {
+    setEditedSteps(prev => {
+      const updated = [...prev];
+      const currentStep = updated[newStepIndex] || {};
+      const testCaseId = currentStep.testCaseId; // Preserve testCaseId
+      
+      // Get all keys and reset them to empty except testCaseId
+      const resetStep = { testCaseId };
+      const allKeys = getStepKeys();
+      allKeys.forEach(key => {
+        if (key !== 'testCaseId') {
+          resetStep[key] = '';
+        }
+      });
+      
+      updated[newStepIndex] = resetStep;
+      return updated;
+    });
+  }
+
+  // Clear focus on any active input field
+  setEditableCell(null); 
+};
+
 
   // --- Settings (Application) dialog ---
   const openSettings = () => {
@@ -431,13 +451,20 @@ export default function App() {
                     </tr>
 
                     {/* nested pageElements */}
-                    {level === "pageconfig" && expandedPage === idx && safeRow.pageElements && (
-                      <tr>
-                        <td colSpan={keysToDisplay.length + 1} style={{ padding: 0 }}>
-                          <div className="nested-table-wrapper">{renderTable(safeRow.pageElements, "pageelements")}</div>
-                        </td>
-                      </tr>
-                    )}
+{level === "pageconfig" && expandedPage === idx && safeRow.pageElements && (
+  <tr>
+    <td colSpan={keysToDisplay.length + 1} style={{ padding: 0 }}>
+      <PageElementsEditor
+        pageData={safeRow}
+        pageIndex={idx}
+        jsonData={jsonData}
+        setJsonData={setJsonData}
+        saveToBackend={saveToBackend}
+        formatHeader={formatHeader}
+      />
+    </td>
+  </tr>
+)}
                   </React.Fragment>
                 );
               })}
@@ -535,7 +562,7 @@ export default function App() {
                 >
                   💾 Save Changes
                 </button>
-                <button onClick={cancelLocalEdits}>❌ Cancel</button>
+                <button onClick={cancelLocalEdits}>❌ Reset</button>
               </div>
             </div>
           )}
@@ -553,44 +580,49 @@ export default function App() {
 
   // --- File upload/download handlers ---
   const handleFileUpload = (e) => {
-    const fileInput = e.target;
-    const file = fileInput.files[0];
-    if (!file) return;
+  const fileInput = e.target;
+  const file = fileInput.files[0];
+  if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const parsedData = JSON.parse(event.target.result);
-        // If top-level already matches your server shape (has data) keep it; otherwise wrap
-        if (parsedData && typeof parsedData === "object" && parsedData.data) {
-          setJsonData(parsedData);
-        } else if (parsedData && typeof parsedData === "object") {
-          setJsonData({ data: parsedData });
-        } else {
-          setJsonData({ data: {} });
-        }
-        setActiveRoot(null);
-        setSelectedFileName(file.name + " (local)");
-        setEditedSteps([]);
-        setDeletedIndices(new Set());
-        setNewStepIndex(null);
-        setEditableCell(null);
-        if (parsedData?.data?.application) {
-          setEditedApplication(parsedData.data.application);
-        } else if (parsedData?.application) {
-          setEditedApplication(parsedData.application);
-        } else {
-          setEditedApplication({});
-        }
-      } catch {
-        alert("Invalid JSON file!");
+  // 🔹 Clear old data first to force re-render
+  setJsonData(null);
+  setActiveRoot(null);
+  setEditedApplication({});
+  setEditedSteps([]);
+  setDeletedIndices(new Set());
+  setNewStepIndex(null);
+  setEditableCell(null);
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    try {
+      const parsedData = JSON.parse(event.target.result);
+
+      // 🔹 Normalize data shape
+      const normalized =
+        parsedData && typeof parsedData === "object" && parsedData.data
+          ? parsedData
+          : { data: parsedData || {} };
+
+      // 🔹 Update state with new data
+      setJsonData(normalized);
+      setSelectedFileName(file.name + " (local)");
+
+      // 🔹 Handle 'application' section if available
+      if (normalized.data.application) {
+        setEditedApplication(normalized.data.application);
+      } else {
+        setEditedApplication({});
       }
-    };
-    reader.readAsText(file);
-
-    // reset to allow same file chosen again
-    fileInput.value = null;
+    } catch (error) {
+      alert("Invalid JSON file!");
+    }
   };
+  reader.readAsText(file);
+
+  // 🔹 Reset input to allow re-uploading same file
+  fileInput.value = null;
+};
 
   const downloadJson = () => {
     if (!jsonData) return alert("No JSON data to download.");
@@ -708,7 +740,7 @@ export default function App() {
             </div>
             <div className="dialog-actions">
               <button onClick={saveApplicationSettings} className="save-btn">Save Changes</button>
-              <button onClick={closeSettings} className="cancel-btn">Cancel</button>
+              
             </div>
           </div>
         </div>

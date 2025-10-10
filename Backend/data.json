@@ -370,7 +370,7 @@
                   "seqId": 1,
                   "type": "Given",
                   "text": "Given User is on 'Login' Page",
-                  "testStepGroupName": "",
+                  "testStepGroupName": "test",
                   "status": "Active",
                   "uuid": "9b07d700-3538-4735-9669-075d9b8b5519",
                   "tesCaseFunctionSteps": [],
@@ -765,7 +765,10 @@
                   "testCaseId": 1999,
                   "seq": "",
                   "seqId": "30",
-                  "text": "Abhay"
+                  "type": "test",
+                  "text": "test",
+                  "uuid": "1",
+                  "id": "01"
                 }
               ]
             }
@@ -1196,11 +1199,11 @@
     "apiconfig": [],
     "application": [
       {
-        "USER_NAME": "Chirag",
+        "USER_NAME": "undefined",
         "USER_UUID": "",
         "APP_UUID": "f746e178-7057-4b3d-9771-6bd8aed8a3be",
         "TENANT_UUID": "58517956-a079-11ed-9d90-4787e808dcfd",
-        "TEST_SUITE_UUID": "chirag5674",
+        "TEST_SUITE_UUID": "",
         "VERSION_NUMBER": 1
       }
     ]
